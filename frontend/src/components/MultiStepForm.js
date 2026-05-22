@@ -60,7 +60,6 @@ const MultiStepForm = ({ onSuccess }) => {
   const [autoFilledFields, setAutoFilledFields] = useState({
     state: false,
     district: false,
-    city: false,
     country: false
   });
   const [pinCodeError, setPinCodeError] = useState('');
@@ -87,7 +86,6 @@ const MultiStepForm = ({ onSuccess }) => {
       pinCode: '',
       state: '',
       district: '',
-      city: '',
       country: ''
     }
   });
@@ -115,14 +113,12 @@ const MultiStepForm = ({ onSuccess }) => {
         // Auto-fill fields
         setValue('state', postOffice.State || '', { shouldValidate: true });
         setValue('district', postOffice.District || '', { shouldValidate: true });
-        setValue('city', postOffice.Region || postOffice.Circle || '', { shouldValidate: true });
         setValue('country', postOffice.Country || 'India', { shouldValidate: true });
 
         // Mark fields as auto-filled (readonly)
         setAutoFilledFields({
           state: true,
           district: true,
-          city: true,
           country: true
         });
 
@@ -134,13 +130,11 @@ const MultiStepForm = ({ onSuccess }) => {
         // Clear auto-filled fields but allow manual entry
         setValue('state', '', { shouldValidate: false });
         setValue('district', '', { shouldValidate: false });
-        setValue('city', '', { shouldValidate: false });
         setValue('country', '', { shouldValidate: false });
 
         setAutoFilledFields({
           state: false,
           district: false,
-          city: false,
           country: false
         });
       }
@@ -165,7 +159,6 @@ const MultiStepForm = ({ onSuccess }) => {
       setAutoFilledFields({
         state: false,
         district: false,
-        city: false,
         country: false
       });
     } finally {
@@ -190,7 +183,6 @@ const MultiStepForm = ({ onSuccess }) => {
       setAutoFilledFields({
         state: false,
         district: false,
-        city: false,
         country: false
       });
     }
@@ -205,7 +197,7 @@ const MultiStepForm = ({ onSuccess }) => {
 
     switch (step) {
       case 1:
-        fieldsToValidate = ['pinCode', 'state', 'district', 'city', 'country'];
+        fieldsToValidate = ['pinCode', 'state', 'district', 'country'];
         break;
       case 2:
         fieldsToValidate = ['desiredLoanAmount', 'useOfFunds'];
@@ -497,29 +489,7 @@ const MultiStepForm = ({ onSuccess }) => {
                   )}
                 </div>
 
-                {/* City */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    City
-                    {autoFilledFields.city && (
-                      <span className="ml-2 text-xs text-green-600">(Auto-filled)</span>
-                    )}
-                  </label>
-                  <input
-                    type="text"
-                    {...register('city', { required: 'City is required' })}
-                    className={`w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none ${
-                      autoFilledFields.city ? 'bg-green-50 border-green-200 text-green-800' : ''
-                    }`}
-                    placeholder="City"
-                    readOnly={autoFilledFields.city}
-                  />
-                  {errors.city && (
-                    <p className="mt-1 text-sm text-orange-600">{errors.city.message}</p>
-                  )}
-                </div>
-
-                {/* Country */}
+                                {/* Country */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Country
@@ -558,6 +528,7 @@ const MultiStepForm = ({ onSuccess }) => {
                       type="number"
                       {...register('desiredLoanAmount', {
                         required: 'Loan amount is required',
+                        valueAsNumber: true,
                         min: { value: 10000, message: 'Minimum loan amount is ₹10,000' }
                       })}
                       className="w-full pl-8 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none"

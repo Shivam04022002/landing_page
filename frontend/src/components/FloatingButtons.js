@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, Phone, ChevronUp } from 'lucide-react';
+import { Phone, ChevronUp } from 'lucide-react';
 
 const FloatingButtons = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  const whatsappNumber = process.env.REACT_APP_WHATSAPP_NUMBER || '1234567890';
   const callNumber = process.env.REACT_APP_CALL_NUMBER || '1234567890';
 
   useEffect(() => {
@@ -53,20 +52,6 @@ const FloatingButtons = () => {
             </motion.button>
           )}
         </AnimatePresence>
-
-        {/* WhatsApp Button */}
-        <motion.a
-          href={`https://wa.me/${whatsappNumber}?text=Hi,%20I'm%20interested%20in%20getting%20a%20business%20loan.`}
-          target="_blank"
-          rel="noopener noreferrer"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          className="w-14 h-14 rounded-full bg-green-500 flex items-center justify-center text-white shadow-lg hover:shadow-green-500/30 transition-shadow floating"
-        >
-          <MessageCircle className="w-6 h-6" />
-        </motion.a>
 
         {/* Call Button */}
         <motion.a

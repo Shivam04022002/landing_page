@@ -98,10 +98,33 @@ let isShuttingDown = false;
 /**
  * Start the server
  */
+const seedAdmin = async () => {
+  try {
+    const Admin = require('./models/Admin');
+    const adminExists = await Admin.findOne({ username: process.env.ADMIN_USERNAME });
+    
+    if (!adminExists) {
+      await Admin.create({
+        username: process.env.ADMIN_USERNAME || 'admin',
+        password: process.env.ADMIN_PASSWORD || 'Admin@321',
+        role: 'superadmin'
+      });
+      console.log(`✅ Admin user created: ${process.env.ADMIN_USERNAME || 'admin'}`);
+    } else {
+      console.log(`👤 Admin user already exists: ${adminExists.username}`);
+    }
+  } catch (err) {
+    console.error('❌ Admin seed error:', err.message);
+  }
+};
+
 const startServer = async () => {
   try {
     // Try to connect to MongoDB (with retries built-in)
     await connectDB();
+    
+    // Seed admin user if not exists
+    await seedAdmin();
     
     // Start Express server
     server = app.listen(PORT, () => {

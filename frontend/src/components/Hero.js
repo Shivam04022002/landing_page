@@ -3,21 +3,33 @@ import { motion } from 'framer-motion';
 import { Phone } from 'lucide-react';
 import MultiStepForm from './MultiStepForm';
 
-// Surjit Finance Logo Component - Orange/Gold Theme
-const SurjitLogo = () => (
-  <div className="flex items-center gap-3">
-    {/* SF Logo with Orange/Gold Gradient */}
-    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30">
-      <svg viewBox="0 0 40 40" className="w-8 h-8">
-        <text x="50%" y="55%" dominantBaseline="middle" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold" fontFamily="serif">SF</text>
-      </svg>
-    </div>
-    <div className="flex flex-col">
-      <span className="text-gray-900 font-bold text-xl tracking-tight">SURJIT FINANCE</span>
-      <span className="text-orange-500 text-xs tracking-wider">TODAY . TOMORROW . TOGETHER</span>
-    </div>
-  </div>
-);
+// Surjit Finance Logo Component
+const SurjitLogo = () => {
+  const [imgError, setImgError] = React.useState(false);
+
+  if (imgError) {
+    return (
+      <div className="flex items-center gap-3">
+        <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-amber-500 to-yellow-600 flex items-center justify-center shadow-md">
+          <span className="text-white font-bold text-lg font-serif">SF</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-gray-900 font-bold text-xl tracking-tight">SURJIT FINANCE</span>
+          <span className="text-amber-600 text-xs tracking-widest">TODAY . TOMORROW . TOGETHER</span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src="/logo.png"
+      alt="Surjit Finance"
+      className="h-14 w-auto object-contain"
+      onError={() => setImgError(true)}
+    />
+  );
+};
 
 const Hero = () => {
   return (
@@ -34,16 +46,10 @@ const Hero = () => {
           <div className="flex items-center gap-4">
             <a
               href={`tel:${process.env.REACT_APP_CALL_NUMBER || '1800-3131-265'}`}
-              className="hidden md:flex items-center gap-2 text-gray-700 hover:text-orange-500 transition-colors"
+              className="flex items-center gap-2 text-gray-700 hover:text-orange-500 transition-colors"
             >
               <Phone className="w-4 h-4" />
               <span className="font-medium">{process.env.REACT_APP_CALL_NUMBER || '1800-3131-265'}</span>
-            </a>
-            <a
-              href="#loan-form"
-              className="px-5 py-2 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-lg"
-            >
-              Apply Now
             </a>
           </div>
         </div>

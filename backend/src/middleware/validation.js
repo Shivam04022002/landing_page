@@ -7,7 +7,10 @@ const leadSchema = Joi.object({
     'any.required': 'Loan amount is required'
   }),
   useOfFunds: Joi.string().valid('Business Expansion', 'Inventory', 'Machinery', 'Working Capital', 'Personal Use', 'Other').required(),
-  averageMonthlySale: Joi.number().min(0).required(),
+  averageMonthlySale: Joi.string().valid('50k-1.5L', '1.5L-3L', '3L-5L', '5L+').required().messages({
+    'any.only': 'Please select a valid monthly sale range',
+    'any.required': 'Monthly sale is required'
+  }),
   businessVintage: Joi.string().valid('Less than 1 year', '1-3 years', '3-5 years', '5+ years').required(),
   creditScore: Joi.string().valid('Below 550', '550-650', '650-750', '750+').required(),
   businessName: Joi.string().trim().max(100).required(),
@@ -23,9 +26,6 @@ const leadSchema = Joi.object({
   }),
   district: Joi.string().trim().required().messages({
     'any.required': 'District is required'
-  }),
-  city: Joi.string().trim().required().messages({
-    'any.required': 'City is required'
   }),
   country: Joi.string().trim().required().messages({
     'any.required': 'Country is required'

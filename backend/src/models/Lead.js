@@ -12,8 +12,9 @@ const leadSchema = new mongoose.Schema({
     enum: ['Business Expansion', 'Inventory', 'Machinery', 'Working Capital', 'Personal Use', 'Other']
   },
   averageMonthlySale: {
-    type: Number,
-    required: [true, 'Monthly sale is required']
+    type: String,
+    required: [true, 'Monthly sale is required'],
+    enum: ['50k-1.5L', '1.5L-3L', '3L-5L', '5L+']
   },
   businessVintage: {
     type: String,
@@ -55,11 +56,6 @@ const leadSchema = new mongoose.Schema({
   district: {
     type: String,
     required: [true, 'District is required'],
-    trim: true
-  },
-  city: {
-    type: String,
-    required: [true, 'City is required'],
     trim: true
   },
   country: {
